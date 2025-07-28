@@ -14,7 +14,6 @@ option(FORCING "FORCING" OFF)
 option(FORCINGPET "FORCINGPET" OFF)
 option(AETROOTZONE "AETROOTZONE" OFF)
 option(NGEN "NGEN" OFF)
-option(UNITTEST "UNITTEST" OFF)
 
 # A numeric verbosity level can be set for debug output printed/logged during execution
 # Use 1 by default when build type is "Debug"
@@ -54,9 +53,6 @@ elseif (AETROOTZONE)
     set(exe_name "cfe_aet_rootzone")
 elseif (NGEN)
     message("${Red} CFE BUILD NGEN CASE!${ColourReset}")
-elseif (UNITTEST)
-    message("${Red} CFE BUILD UNITTEST CASE!${ColourReset}")
-    set(exe_name "cfe_unittest")
 endif ()
 
 # set the project name
@@ -93,9 +89,6 @@ elseif (FORCINGPET)
             ./extern/evapotranspiration/src/pet.c ./extern/evapotranspiration/src/bmi_pet.c)
 elseif (BASE)
     add_executable(${exe_name} ./src/main.c ./src/cfe.c ./src/bmi_cfe.c ./src/giuh.c ./src/conceptual_reservoir.c
-            ./src/nash_cascade.c)
-elseif (UNITTEST)
-    add_executable(${exe_name} test/combined_bmi_funcs_test.c ./src/cfe.c ./src/bmi_cfe.c ./src/giuh.c ./src/conceptual_reservoir.c
             ./src/nash_cascade.c)
 endif ()
 
