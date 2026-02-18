@@ -17,8 +17,6 @@
   infiltration by Ahmad Jan Khattak, May 2024.
 *******************************************************************************************************/
 
-#define CFE_DEBUG 0
-
 #define INPUT_VAR_NAME_COUNT 5
 #define OUTPUT_VAR_NAME_COUNT 15
 
