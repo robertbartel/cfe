@@ -16,6 +16,25 @@ option(AETROOTZONE "AETROOTZONE" OFF)
 option(NGEN "NGEN" OFF)
 option(UNITTEST "UNITTEST" OFF)
 
+# A numeric verbosity level can be set for debug output printed/logged during execution
+# Use 1 by default when build type is "Debug"
+if (NOT DEFINED DEBUG_VERBOSITY AND "${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+    set(DEBUG_VERBOSITY 1)
+# Use 0 by default for any build types other than "Debug"
+elseif (NOT DEFINED DEBUG_VERBOSITY)
+    set(DEBUG_VERBOSITY 0)
+# Catch any "ON" or equivalent, excluding all integers other than "1" (which we want to handle separately)
+elseif (${DEBUG_VERBOSITY} AND NOT ${DEBUG_VERBOSITY} GREATER "1" AND NOT ${DEBUG_VERBOSITY} LESS_EQUAL "0")
+    set(DEBUG_VERBOSITY 1)
+# Should catch any other values except an integer greater than 1 (which we want to use directly)
+elseif (NOT ${DEBUG_VERBOSITY} GREATER "1")
+    set(DEBUG_VERBOSITY 0)
+endif ()
+# While not an explicit condition, DEBUG_VERBOSITY is left alone if set to some integer greater than 1
+
+# TODO: this should ideally be applied to a specific target, but how targets are defined and set up probably needs to be adjusted first
+add_compile_definitions(CFE_DEBUG=${DEBUG_VERBOSITY})
+
 if( (NOT BASE) AND (NOT FORCING) AND (NOT FORCINGPET) AND (NOT AETROOTZONE) AND (NOT NGEN) AND (NOT UNITTEST) )
   message("${Red}Options: BASE, FORCING, FORCINGPET, AETROOTZONE, NGEN, UNITTEST" ${ColourReset})
   message(FATAL_ERROR "Invalid option is provided, CMake will exit." )
